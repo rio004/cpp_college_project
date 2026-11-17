@@ -1,9 +1,13 @@
 cmake_minimum_required(VERSION 3.14)
-project(Lab1 CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+project(EsportsScout CXX)
+
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# ------------------------------------------------------------------
+# Google Test (Topic 11) - downloaded the first time cmake is run.
+# ------------------------------------------------------------------
 include(FetchContent)
 
 FetchContent_Declare(
@@ -15,25 +19,29 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-enable_testing()
-
+# ------------------------------------------------------------------
+# The application (menu + all twelve topics)
+# ------------------------------------------------------------------
 add_executable(
     main_app
     main.cpp
     main_functions.cpp
 )
 
+# ------------------------------------------------------------------
+# The unit tests (only main_functions.cpp is under test)
+# ------------------------------------------------------------------
 add_executable(
-    run_tests
+    scout_tests
     function_tests.cpp
     main_functions.cpp
 )
 
 target_link_libraries(
-    run_tests
+    scout_tests
     PRIVATE
     gtest_main
 )
 
-include(GoogleTest)
-gtest_discover_tests(run_tests)
+enable_testing()
+add_test(NAME unit_tests COMMAND scout_tests)

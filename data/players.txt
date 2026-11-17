@@ -1,0 +1,8 @@
+# tag|real name|role|rating|win rate|kd ratio|scout status
+# This is the file the program reads when it starts (Topic 3 - file input).
+Vortex|Aaron Byrne|Duelist|88|64.5|1.32|shortlisted
+Nyx|Daniel Walsh|Controller|79|58.0|1.05|scouting
+Kestrel|Sofia Martins|Initiator|91|71.2|1.44|signed
+Havoc|Liam Doyle|Duelist|73|52.4|0.98|scouting
+Echo|Maya Chen|Sentinel|84|61.8|1.18|scouting
+Raven|Tomás Silva|Controller|66|47.1|0.87|rejected

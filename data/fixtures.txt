@@ -1,0 +1,6 @@
+# fixture id|opponent|date|map|kills|deaths|MVP tag
+1|Dublin Drakes|2026-10-18|Ascent|14|9|Vortex
+2|Cork Comets|2026-10-25|Haven|11|12|Kestrel
+3|Galway Goblins|2026-11-01|Bind|17|7|Kestrel
+4|Limerick Lynx|2026-11-08|Lotus|13|10|Vortex
+5|Belfast Banshees|2026-11-15|Split|9|14|Echo
