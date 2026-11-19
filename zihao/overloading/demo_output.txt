@@ -1,0 +1,30 @@
+=== 1. build the squad ===
+  1   Vortex  (Duelist, rating 88)
+  2   Nyx  (Controller, rating 79)
+  3   Kestrel  (Initiator, rating 50)
+  4   Echo  (Sentinel, rating 84)
+
+=== 2. the defaults did their job ===
+  Nyx     rating 79, win rate 0, K/D 0, status scouting
+  Kestrel rating 50 (no rating was passed in)
+
+=== 3. show one player in detail ===
+  Name      : Aaron Byrne
+  Tag       : Vortex
+  Role      : Duelist
+  Rating    : 88
+  Status    : shortlisted
+
+=== 4. findPlayer by tag (third argument is a string) ===
+  found Nyx (Daniel Walsh)
+
+=== 5. findPlayer by rating (third argument is an int) ===
+  rating 88 belongs to Vortex
+
+=== 6. a tag that is not there ===
+  Ghost is not in the squad
+
+=== 7. same call shape, different function ===
+  findPlayer(squad, count, "Nyx") -> the string version
+  findPlayer(squad, count, 88)    -> the int version
+  the compiler decides from the type of the third argument

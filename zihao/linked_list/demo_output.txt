@@ -1,0 +1,45 @@
+=== 1. empty list ===
+  (the shortlist is empty)
+  count = 0
+
+=== 2. add four candidates ===
+  No  Gamer tag     Role          Rating  Status
+  --  ------------  ------------  ------  -----------
+  1   Echo          Sentinel      84      scouting
+  2   Kestrel       Initiator     91      signed
+  3   Nyx           Controller    79      scouting
+  4   Vortex        Duelist       88      shortlisted
+  count = 4
+
+=== 3. a duplicate is refused ===
+  Vortex is already on the list, not added again
+
+=== 4. find one candidate by tag ===
+  found Nyx (Daniel Walsh, rating 79)
+
+=== 5. remove the FIRST candidate (Echo) ===
+  Echo removed, head moved to the next node
+  No  Gamer tag     Role          Rating  Status
+  --  ------------  ------------  ------  -----------
+  1   Kestrel       Initiator     91      signed
+  2   Nyx           Controller    79      scouting
+  3   Vortex        Duelist       88      shortlisted
+
+=== 6. remove a candidate from the MIDDLE (Kestrel) ===
+  Kestrel removed, the node before it now points past it
+  No  Gamer tag     Role          Rating  Status
+  --  ------------  ------------  ------  -----------
+  1   Nyx           Controller    79      scouting
+  2   Vortex        Duelist       88      shortlisted
+  count = 2
+
+=== 7. remove a tag that is not there ===
+  Ghost was not on the list, nothing changed
+  No  Gamer tag     Role          Rating  Status
+  --  ------------  ------------  ------  -----------
+  1   Nyx           Controller    79      scouting
+  2   Vortex        Duelist       88      shortlisted
+
+=== 8. free the whole list ===
+  (the shortlist is empty)
+  count = 0
