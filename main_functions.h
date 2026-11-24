@@ -21,10 +21,7 @@ struct player {
 
 struct game {
   int gameid;
-  string game;
-  player *topPlayer;
-  int kills;
-  int deaths;
+  string game_name;
 };
 
 struct fixture {
