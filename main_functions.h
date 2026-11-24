@@ -34,4 +34,4 @@ struct fixture {
   game match_stats;
 };
 
-void example(fixture fixtures[], float example1);
+int findBestPlayerIndex(player team[], int n);
