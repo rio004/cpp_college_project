@@ -31,4 +31,9 @@ struct fixture {
   game match_stats;
 };
 
+// recursive
 int findBestPlayerIndex(player team[], int n);
+
+// sorting and overloads
+void sortById(fixture fixtures[], int count);
+void sortById(game games[], int count);
