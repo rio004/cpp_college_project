@@ -9,7 +9,8 @@
 
 using namespace std;
 
-struct player {
+struct player
+{
   string real_name;
   string gamer_tag;
   string current_role;
@@ -19,12 +20,14 @@ struct player {
   string scout_status;
 };
 
-struct game {
+struct game
+{
   int gameid;
   string game_name;
 };
 
-struct fixture {
+struct fixture
+{
   int fixture_id;
   string opponent;
   string matchdate;
