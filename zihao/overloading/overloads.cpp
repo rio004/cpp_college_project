@@ -5,6 +5,7 @@
 player makePlayer(int playerid, const string &name, const string &tag, const string &role,
                   int rating, float winRate, float kdRatio, const string &status)
 {
+    // The defaults are filled in here, so a new candidate starts at rating 50 and Unsigned.
     player p;
     p.playerid = playerid;
     p.real_name = name;
@@ -34,6 +35,7 @@ void show(const player &p)
 
 void show(const player &p, int index)
 {
+    // Second version of show(): the extra int argument picks this one.
     cout << "  [" << index << "] " << p.playerid;
 
     int gap = 4 - (int)to_string(p.playerid).size();
@@ -63,6 +65,7 @@ void show(const player &p, int index)
 
 int findPlayer(player players[], int count, const string &tag)
 {
+    // Same name as the next one: a string argument sends the call here.
     for (int i = 0; i < count; i++)
     {
         if (players[i].gamer_tag == tag)
@@ -76,6 +79,7 @@ int findPlayer(player players[], int count, const string &tag)
 
 int findPlayer(player players[], int count, int playerid)
 {
+    // An int argument sends the call here.
     for (int i = 0; i < count; i++)
     {
         if (players[i].playerid == playerid)

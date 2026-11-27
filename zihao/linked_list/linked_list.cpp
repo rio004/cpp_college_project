@@ -9,11 +9,13 @@ void initList(Node *&head)
 
 bool addCandidate(Node *&head, const player &p)
 {
+    // Duplicate tags are refused, otherwise one player gets two rows.
     if (findCandidate(head, p.gamer_tag) != nullptr)
     {
         return false;
     }
 
+    // New node goes to the front: one step, no other node moves.
     Node *node = new Node;
     node->data = p;
     node->next = head;
@@ -29,6 +31,7 @@ bool popCandidate(Node *&head, player &out)
         return false;
     }
 
+    // Copy the record out first, then unlink and free the node.
     out = head->data;
 
     Node *old = head;
@@ -40,6 +43,7 @@ bool popCandidate(Node *&head, player &out)
 
 bool removeCandidate(Node *&head, const string &tag)
 {
+    // prev stays one node behind, so a node in the middle can be spliced out.
     Node *prev = nullptr;
     Node *cur = head;
 
@@ -69,6 +73,7 @@ bool removeCandidate(Node *&head, const string &tag)
 
 Node *findCandidate(Node *head, const string &tag)
 {
+    // Returns the node itself, not a copy, so the caller can edit it.
     Node *cur = head;
 
     while (cur != nullptr)
@@ -137,6 +142,7 @@ void printList(const Node *head)
 
 int countCandidates(const Node *head)
 {
+    // The list has no size field, so walk it and count.
     int count = 0;
     const Node *cur = head;
 
@@ -151,6 +157,7 @@ int countCandidates(const Node *head)
 
 void clearList(Node *&head)
 {
+    // Take next before delete, otherwise the rest of the list is lost.
     while (head != nullptr)
     {
         Node *next = head->next;
