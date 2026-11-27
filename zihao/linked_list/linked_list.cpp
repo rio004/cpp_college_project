@@ -1,5 +1,7 @@
 #include "linked_list.h"
 
+#include <iomanip>
+
 void initList(Node *&head)
 {
     head = nullptr;
@@ -16,6 +18,22 @@ bool addCandidate(Node *&head, const player &p)
     node->data = p;
     node->next = head;
     head = node;
+
+    return true;
+}
+
+bool popCandidate(Node *&head, player &out)
+{
+    if (head == nullptr)
+    {
+        return false;
+    }
+
+    out = head->data;
+
+    Node *old = head;
+    head = head->next;
+    delete old;
 
     return true;
 }
@@ -65,6 +83,20 @@ Node *findCandidate(Node *head, const string &tag)
     return nullptr;
 }
 
+void showCandidate(const player &p)
+{
+    cout << "  Player ID : " << p.playerid << endl;
+    cout << "  Name      : " << p.real_name << endl;
+    cout << "  Gamer tag : " << p.gamer_tag << endl;
+    cout << "  Role      : " << p.current_role << endl;
+    cout << "  Rating    : " << p.rating << endl;
+    cout << "  Win rate  : " << fixed << setprecision(1) << p.winRate << " %" << endl;
+    cout << "  K/D ratio : " << setprecision(2) << p.kdRatio << endl;
+    cout.unsetf(ios::fixed);
+    cout.precision(6);
+    cout << "  Status    : " << p.scout_status << endl;
+}
+
 void printList(const Node *head)
 {
     if (head == nullptr)
@@ -76,12 +108,17 @@ void printList(const Node *head)
     const Node *cur = head;
     int position = 1;
 
-    cout << "  No  Gamer tag     Role          Rating  Status" << endl;
-    cout << "  --  ------------  ------------  ------  -----------" << endl;
+    cout << "  No  ID   Gamer tag     Role          Rating  Status" << endl;
+    cout << "  --  ---  ------------  ------------  ------  --------" << endl;
 
     while (cur != nullptr)
     {
-        cout << "  " << position << "   " << cur->data.gamer_tag;
+        cout << "  " << position << "   " << cur->data.playerid;
+        for (int i = (int)to_string(cur->data.playerid).size(); i < 4; i++)
+        {
+            cout << " ";
+        }
+        cout << " " << cur->data.gamer_tag;
         for (int i = (int)cur->data.gamer_tag.size(); i < 12; i++)
         {
             cout << " ";

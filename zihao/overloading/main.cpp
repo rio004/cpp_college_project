@@ -2,70 +2,59 @@
 
 int main()
 {
-    player squad[6];
+    player squad[MAX_PLAYERS];
     int count = 0;
 
-    cout << "=== 1. build the squad ===" << endl;
-    squad[count++] = makePlayer("Aaron Byrne", "Vortex", "Duelist", 88, 64.5f, 1.32f, "shortlisted");
-    squad[count++] = makePlayer("Daniel Walsh", "Nyx", "Controller", 79);
-    squad[count++] = makePlayer("Sofia Martins", "Kestrel", "Initiator");
-    squad[count++] = makePlayer("Tom Reid", "Echo", "Sentinel", 84, 61.8f, 1.18f, "scouting");
-
-    for (int i = 0; i < count; i++)
-    {
-        show(squad[i], i + 1);
-    }
+    cout << "========== OVERLOADING AND DEFAULT VALUES ==========" << endl;
     cout << endl;
 
-    cout << "=== 2. the defaults did their job ===" << endl;
-    cout << "  Nyx     rating " << squad[1].rating
-         << ", win rate " << squad[1].winRate
-         << ", K/D " << squad[1].kdRatio
-         << ", status " << squad[1].scout_status << endl;
-    cout << "  Kestrel rating " << squad[2].rating
-         << " (no rating was passed in)" << endl;
+    cout << "[1] three players, all fields given" << endl;
+    squad[count++] = makePlayer(7, "Lee Sang-hyeok", "Faker", "Mid", 96, 67.4f, 4.10f, "Signed");
+    squad[count++] = makePlayer(45, "Choi Woo-je", "Zeus", "Top", 92, 65.2f, 3.42f, "Unsigned");
+    squad[count++] = makePlayer(89, "Moon Hyeon-jun", "Oner", "Jungle", 93, 61.8f, 4.65f, "Unsigned");
+
+    cout << "[2] one player with the default values" << endl;
+    squad[count++] = makePlayer(120, "New Player", "Rookie", "Support");
     cout << endl;
 
-    cout << "=== 3. show one player in detail ===" << endl;
+    cout << "[3] show(player) - the full record" << endl;
     show(squad[0]);
     cout << endl;
 
-    cout << "=== 4. findPlayer by tag (third argument is a string) ===" << endl;
-    player *found = findPlayer(squad, count, "Nyx");
-    if (found != nullptr)
+    cout << "[4] show(player, index) - one line of the list" << endl;
+    for (int i = 0; i < count; i++)
     {
-        cout << "  found " << found->gamer_tag << " (" << found->real_name << ")" << endl;
+        show(squad[i], i);
+    }
+    cout << endl;
+
+    cout << "[5] findPlayer(tag) - string argument" << endl;
+    int pos = findPlayer(squad, count, "Zeus");
+    if (pos >= 0)
+    {
+        show(squad[pos]);
     }
     else
     {
-        cout << "  not found" << endl;
+        cout << "  Zeus not found" << endl;
     }
     cout << endl;
 
-    cout << "=== 5. findPlayer by rating (third argument is an int) ===" << endl;
-    found = findPlayer(squad, count, 88);
-    if (found != nullptr)
+    cout << "[6] findPlayer(id) - int argument, same name" << endl;
+    pos = findPlayer(squad, count, 89);
+    if (pos >= 0)
     {
-        cout << "  rating 88 belongs to " << found->gamer_tag << endl;
+        show(squad[pos]);
     }
     else
     {
-        cout << "  no player with that rating" << endl;
+        cout << "  89 not found" << endl;
     }
     cout << endl;
 
-    cout << "=== 6. a tag that is not there ===" << endl;
-    found = findPlayer(squad, count, "Ghost");
-    if (found == nullptr)
-    {
-        cout << "  Ghost is not in the squad" << endl;
-    }
-    cout << endl;
-
-    cout << "=== 7. same call shape, different function ===" << endl;
-    cout << "  findPlayer(squad, count, \"Nyx\") -> the string version" << endl;
-    cout << "  findPlayer(squad, count, 88)    -> the int version" << endl;
-    cout << "  the compiler decides from the type of the third argument" << endl;
+    cout << "[7] a tag and an id that are not there" << endl;
+    cout << "  findPlayer(tag 'Nyx')   -> " << findPlayer(squad, count, "Nyx") << endl;
+    cout << "  findPlayer(id 999)      -> " << findPlayer(squad, count, 999) << endl;
 
     return 0;
 }

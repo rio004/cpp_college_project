@@ -5,8 +5,11 @@
 
 using namespace std;
 
+const int MAX_PLAYERS = 10;
+
 struct player
 {
+    int    playerid;
     string real_name;
     string gamer_tag;
     string current_role;
@@ -16,12 +19,12 @@ struct player
     string scout_status;
 };
 
-void show(const player &p);
-void show(const player &p, int position);
-
-player *findPlayer(player squad[], int count, const string &tag);
-player *findPlayer(player squad[], int count, int rating);
-
-player makePlayer(const string &name, const string &tag, const string &role,
+player makePlayer(int playerid, const string &name, const string &tag, const string &role,
                   int rating = 50, float winRate = 0.0f, float kdRatio = 0.0f,
-                  const string &status = "scouting");
+                  const string &status = "Unsigned");
+
+void show(const player &p);
+void show(const player &p, int index);
+
+int findPlayer(player players[], int count, const string &tag);
+int findPlayer(player players[], int count, int playerid);

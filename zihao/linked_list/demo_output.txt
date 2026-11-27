@@ -1,45 +1,57 @@
-=== 1. empty list ===
+================ SHORTLIST (LINKED LIST) ================
+
+[1] the new shortlist is empty
   (the shortlist is empty)
-  count = 0
+    count = 0
 
-=== 2. add four candidates ===
-  No  Gamer tag     Role          Rating  Status
-  --  ------------  ------------  ------  -----------
-  1   Echo          Sentinel      84      scouting
-  2   Kestrel       Initiator     91      signed
-  3   Nyx           Controller    79      scouting
-  4   Vortex        Duelist       88      shortlisted
-  count = 4
+[2] add four candidates (each one goes to the front)
+  No  ID   Gamer tag     Role          Rating  Status
+  --  ---  ------------  ------------  ------  --------
+  1   89   Oner          Jungle        93      Unsigned
+  2   45   Zeus          Top           92      Unsigned
+  3   6    Keria         Support       94      Signed
+  4   7    Faker         Mid           96      Signed
+    count = 4
 
-=== 3. a duplicate is refused ===
-  Vortex is already on the list, not added again
+[3] add Faker again -> refused, the tag is already there
+    Faker is already on the shortlist
+    count = 4
 
-=== 4. find one candidate by tag ===
-  found Nyx (Daniel Walsh, rating 79)
+[4] find Zeus by tag -> pointer returned, no copy
+  Player ID : 45
+  Name      : Choi Woo-je
+  Gamer tag : Zeus
+  Role      : Top
+  Rating    : 92
+  Win rate  : 65.2 %
+  K/D ratio : 3.42
+  Status    : Unsigned
 
-=== 5. remove the FIRST candidate (Echo) ===
-  Echo removed, head moved to the next node
-  No  Gamer tag     Role          Rating  Status
-  --  ------------  ------------  ------  -----------
-  1   Kestrel       Initiator     91      signed
-  2   Nyx           Controller    79      scouting
-  3   Vortex        Duelist       88      shortlisted
+[5] pop the first candidate -> record printed, node deleted
+    popped: Oner
+  Player ID : 89
+  Name      : Moon Hyeon-jun
+  Gamer tag : Oner
+  Role      : Jungle
+  Rating    : 93
+  Win rate  : 61.8 %
+  K/D ratio : 4.65
+  Status    : Unsigned
+  No  ID   Gamer tag     Role          Rating  Status
+  --  ---  ------------  ------------  ------  --------
+  1   45   Zeus          Top           92      Unsigned
+  2   6    Keria         Support       94      Signed
+  3   7    Faker         Mid           96      Signed
 
-=== 6. remove a candidate from the MIDDLE (Kestrel) ===
-  Kestrel removed, the node before it now points past it
-  No  Gamer tag     Role          Rating  Status
-  --  ------------  ------------  ------  -----------
-  1   Nyx           Controller    79      scouting
-  2   Vortex        Duelist       88      shortlisted
-  count = 2
+[6] remove Keria from the middle
+  No  ID   Gamer tag     Role          Rating  Status
+  --  ---  ------------  ------------  ------  --------
+  1   45   Zeus          Top           92      Unsigned
+  2   7    Faker         Mid           96      Signed
 
-=== 7. remove a tag that is not there ===
-  Ghost was not on the list, nothing changed
-  No  Gamer tag     Role          Rating  Status
-  --  ------------  ------------  ------  -----------
-  1   Nyx           Controller    79      scouting
-  2   Vortex        Duelist       88      shortlisted
+[7] remove a tag that is not there
+    Nyx is not on the shortlist
 
-=== 8. free the whole list ===
+[8] clear the whole list
   (the shortlist is empty)
-  count = 0
+    count = 0
