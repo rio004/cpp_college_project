@@ -67,3 +67,10 @@ Node *findCandidate(Node *head, const string &tag);
 bool addCandidate(Node *&head, const player &p);
 bool popCandidate(Node *&head, player &out);
 void clearList(Node *&head);
+
+// Menu
+void showMenu();
+void listPlayers(const player Players[], int numPlayers);
+void listFixtures(const fixture Fixtures[], int numFixtures);
+void runMenu(player Players[], int numPlayers, fixture Fixtures[],
+             int numFixtures, game games[], int numGames);

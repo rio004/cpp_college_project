@@ -300,3 +300,156 @@ void clearList(Node *&head)
     head = next;
   }
 }
+
+void showMenu()
+{
+  // Displays the main menu options to the user
+  cout << "\n===== E-SPORTS SCOUTING MENU =====\n";
+  cout << "1. List players\n";
+  cout << "2. List fixtures\n";
+  cout << "3. Find the best by rating\n";
+  cout << "4. Sort by game\n";
+  cout << "5. Sort by fixture\n";
+  cout << "6. Shortlist\n";
+  cout << "7. Exit\n";
+  cout << "Enter your choice: ";
+}
+
+void listPlayers(const player Players[], int numPlayers)
+{
+  // Displays all players currently loaded in the Players array
+  if (numPlayers <= 0)
+  {
+    cout << "No players available.\n";
+    return;
+  }
+
+  for (int i = 0; i < numPlayers; i++)
+  {
+    cout << Players[i].playerid << " | " << Players[i].gamer_tag << " ("
+         << Players[i].real_name << ") | Role: " << Players[i].current_role
+         << " | Rating: " << Players[i].rating
+         << " | WinRate: " << Players[i].winRate
+         << " | K/D: " << Players[i].kdRatio
+         << " | Status: " << Players[i].scout_status << endl;
+  }
+}
+
+void listGames(const game games[], int numGames)
+{
+  // Displays all games currently loaded in the games array
+  if (numGames <= 0)
+  {
+    cout << "No games available.\n";
+    return;
+  }
+
+  for (int i = 0; i < numGames; i++)
+  {
+    cout << games[i].gameid << " | " << games[i].game_name << endl;
+  }
+}
+
+void listFixtures(const fixture Fixtures[], int numFixtures)
+{
+  // Displays all fixtures currently loaded in the Fixtures array
+  if (numFixtures <= 0)
+  {
+    cout << "No fixtures available.\n";
+    return;
+  }
+
+  for (int i = 0; i < numFixtures; i++)
+  {
+    cout << Fixtures[i].fixture_id << " | vs " << Fixtures[i].opponent
+         << " | Date: " << Fixtures[i].matchdate
+         << " | Game: " << Fixtures[i].match_stats.game_name
+         << " (ID: " << Fixtures[i].match_stats.gameid << ")" << endl;
+  }
+}
+
+void runMenu(player Players[], int numPlayers, fixture Fixtures[],
+             int numFixtures, game games[], int numGames)
+{
+  // Runs the main interactive menu loop and dispatches to project functions
+  int choice = 0;
+
+  while (choice != 7)
+  {
+    showMenu();
+    if (!(cin >> choice))
+    {
+      cout << "Invalid input. Please enter a number.\n";
+      continue;
+    }
+
+    switch (choice)
+    {
+    case 1:
+      // List players
+      listPlayers(Players, numPlayers);
+      break;
+
+    case 2:
+      // List fixtures
+      listFixtures(Fixtures, numFixtures);
+      break;
+
+    case 3:
+      // Find the best by rating
+      if (numPlayers > 0)
+      {
+        int bestIdx = findBestPlayerIndex(Players, numPlayers);
+        cout << "Best player: " << Players[bestIdx].gamer_tag
+             << " (" << Players[bestIdx].real_name << ") - Rating: "
+             << Players[bestIdx].rating << endl;
+      }
+      else
+      {
+        cout << "No players available.\n";
+      }
+      break;
+
+    case 4:
+      // Sort by game
+      if (numGames > 0)
+      {
+        sortById(games, numGames);
+        cout << "Games sorted by ID:\n";
+        listGames(games, numGames);
+      }
+      else
+      {
+        cout << "No games available.\n";
+      }
+      break;
+
+    case 5:
+      // Sort by fixture
+      if (numFixtures > 0)
+      {
+        sortById(Fixtures, numFixtures);
+        cout << "Fixtures sorted by ID:\n";
+        listFixtures(Fixtures, numFixtures);
+      }
+      else
+      {
+        cout << "No fixtures available.\n";
+      }
+      break;
+
+    case 6:
+      // Shortlist
+      cout << "Shortlist\n";
+      break;
+
+    case 7:
+      cout << "Exiting menu.\n";
+      break;
+
+    default:
+      cout << "Invalid choice. Please select 1-7.\n";
+      break;
+    }
+  }
+}
