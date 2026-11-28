@@ -63,14 +63,18 @@ void readingFixturesInputFiles(string filename, fixture Fixtures[],
 int searchForPlayerID(const player Players[], int size, int playerID);
 
 // linked list
-Node *findCandidate(Node *head, const string &tag);
+Node *findCandidate(Node *head, const int &id);
 bool addCandidate(Node *&head, const player &p);
 bool popCandidate(Node *&head, player &out);
+bool removeCandidate(Node *&head, const int &id);
+void showShortlist(Node *head);
+void showCandidateRecord(const player &p);
 void clearList(Node *&head);
 
 // Menu
 void showMenu();
 void listPlayers(const player Players[], int numPlayers);
+void listGames(const game games[], int numGames);
 void listFixtures(const fixture Fixtures[], int numFixtures);
 void runMenu(player Players[], int numPlayers, fixture Fixtures[],
              int numFixtures, game games[], int numGames);
