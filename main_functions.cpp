@@ -238,3 +238,65 @@ int searchForPlayerID(const player players[], int size, int playerID)
   }
   return -1;
 }
+
+Node *findCandidate(Node *head, const int &id)
+{
+  // Returns the node itself, not a copy, so the caller can edit it.
+  Node *cur = head;
+
+  while (cur != nullptr)
+  {
+    if (cur->data.playerid == id)
+    {
+      return cur;
+    }
+    cur = cur->next;
+  }
+
+  return nullptr;
+}
+
+bool addCandidate(Node *&head, const player &p)
+{
+  // Duplicate playerid are refused, otherwise one player gets two rows.
+  if (findCandidate(head, p.playerid) != nullptr)
+  {
+    return false;
+  }
+
+  // New node goes to the front: one step, no other node moves.
+  Node *node = new Node;
+  node->data = p;
+  node->next = head;
+  head = node;
+
+  return true;
+}
+
+bool popCandidate(Node *&head, player &out)
+{
+  if (head == nullptr)
+  {
+    return false;
+  }
+
+  // Copy the record out first, then unlink and free the node.
+  out = head->data;
+
+  Node *old = head;
+  head = head->next;
+  delete old;
+
+  return true;
+}
+
+void clearList(Node *&head)
+{
+  // Take next before delete, otherwise the rest of the list is lost.
+  while (head != nullptr)
+  {
+    Node *next = head->next;
+    delete head;
+    head = next;
+  }
+}

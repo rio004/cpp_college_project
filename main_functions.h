@@ -38,6 +38,12 @@ struct fixture
   game match_stats;
 };
 
+struct Node
+{
+  player data;
+  Node *next;
+};
+
 // recursive
 int findBestPlayerIndex(player team[], int n);
 
@@ -55,3 +61,9 @@ void readingFixturesInputFiles(string filename, fixture Fixtures[],
                                int *p_numFixtures);
 
 int searchForPlayerID(const player Players[], int size, int playerID);
+
+// linked list
+Node *findCandidate(Node *head, const string &tag);
+bool addCandidate(Node *&head, const player &p);
+bool popCandidate(Node *&head, player &out);
+void clearList(Node *&head);
