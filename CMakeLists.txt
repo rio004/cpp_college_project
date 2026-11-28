@@ -23,17 +23,19 @@ add_executable(
     main_functions.cpp
 )
 
+# Not called run_tests: that name clashes with the RUN_TESTS project CMake
+# generates on Windows, and the build then fails with ctest error 8
 add_executable(
-    run_tests
+    unit_tests
     function_tests.cpp
     main_functions.cpp
 )
 
 target_link_libraries(
-    run_tests
+    unit_tests
     PRIVATE
     gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(run_tests)
+gtest_discover_tests(unit_tests)

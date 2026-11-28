@@ -290,6 +290,72 @@ bool popCandidate(Node *&head, player &out)
   return true;
 }
 
+void showShortlist(Node *head)
+{
+  // Walks the list and prints the candidates in the order they will be popped
+  if (head == nullptr)
+  {
+    cout << "The shortlist is empty.\n";
+    return;
+  }
+
+  Node *cur = head;
+  int position = 1;
+
+  while (cur != nullptr)
+  {
+    cout << position << ". " << cur->data.playerid << " | "
+         << cur->data.gamer_tag << " (" << cur->data.real_name << ") | Role: "
+         << cur->data.current_role << " | Rating: " << cur->data.rating
+         << " | Status: " << cur->data.scout_status << endl;
+    cur = cur->next;
+    position++;
+  }
+}
+
+void showCandidateRecord(const player &p)
+{
+  // The full record, so the scout can decide before signing
+  cout << "  ID        : " << p.playerid << endl;
+  cout << "  Name      : " << p.real_name << endl;
+  cout << "  Gamer tag : " << p.gamer_tag << endl;
+  cout << "  Role      : " << p.current_role << endl;
+  cout << "  Rating    : " << p.rating << endl;
+  cout << "  Win rate  : " << p.winRate << " %" << endl;
+  cout << "  K/D ratio : " << p.kdRatio << endl;
+  cout << "  Status    : " << p.scout_status << endl;
+}
+
+bool removeCandidate(Node *&head, const int &id)
+{
+  // prev stays one node behind, so a node in the middle can be spliced out
+  Node *prev = nullptr;
+  Node *cur = head;
+
+  while (cur != nullptr)
+  {
+    if (cur->data.playerid == id)
+    {
+      if (prev == nullptr)
+      {
+        head = cur->next;
+      }
+      else
+      {
+        prev->next = cur->next;
+      }
+
+      delete cur;
+      return true;
+    }
+
+    prev = cur;
+    cur = cur->next;
+  }
+
+  return false;
+}
+
 void clearList(Node *&head)
 {
   // Take next before delete, otherwise the rest of the list is lost.
@@ -379,6 +445,8 @@ void runMenu(player Players[], int numPlayers, fixture Fixtures[],
     showMenu();
     if (!(cin >> choice))
     {
+      cin.clear();
+      cin.ignore(10000, '\n');
       cout << "Invalid input. Please enter a number.\n";
       continue;
     }
@@ -439,9 +507,113 @@ void runMenu(player Players[], int numPlayers, fixture Fixtures[],
       break;
 
     case 6:
-      // Shortlist
-      cout << "Shortlist\n";
+    {
+      // Shortlist: the candidates being looked at right now
+      Node *shortlist = nullptr;
+      int sub = -1;
+
+      while (sub != 0)
+      {
+        cout << "\n--- SHORTLIST ---\n";
+        cout << "1. Add a player\n";
+        cout << "2. Show the shortlist\n";
+        cout << "3. Pop the first candidate\n";
+        cout << "4. Remove a candidate\n";
+        cout << "0. Back to the main menu\n";
+        cout << "Enter your choice: ";
+
+        if (!(cin >> sub))
+        {
+          cin.clear();
+          cin.ignore(10000, '\n');
+          cout << "Invalid input. Please enter a number.\n";
+          continue;
+        }
+
+        if (sub == 1)
+        {
+          int id = 0;
+          cout << "Player ID to add: ";
+          cin >> id;
+
+          int idx = searchForPlayerID(Players, numPlayers, id);
+
+          if (idx < 0)
+          {
+            cout << "No player with ID " << id << ".\n";
+          }
+          else if (Players[idx].scout_status == "Signed")
+          {
+            cout << Players[idx].gamer_tag
+                 << " is already signed, he is not on the market.\n";
+          }
+          else if (!addCandidate(shortlist, Players[idx]))
+          {
+            cout << Players[idx].gamer_tag
+                 << " is already on the shortlist.\n";
+          }
+          else
+          {
+            cout << Players[idx].gamer_tag << " added to the shortlist.\n";
+          }
+        }
+        else if (sub == 2)
+        {
+          showShortlist(shortlist);
+        }
+        else if (sub == 3)
+        {
+          player popped;
+
+          if (!popCandidate(shortlist, popped))
+          {
+            cout << "The shortlist is empty.\n";
+          }
+          else
+          {
+            cout << "\nPopped from the shortlist:\n";
+            showCandidateRecord(popped);
+
+            char answer = 'n';
+            cout << "Sign this player? (y/n): ";
+            cin >> answer;
+
+            if (answer == 'y' || answer == 'Y')
+            {
+              int idx = searchForPlayerID(Players, numPlayers, popped.playerid);
+
+              if (idx >= 0)
+              {
+                Players[idx].scout_status = "Signed";
+                cout << Players[idx].gamer_tag << " is now Signed.\n";
+              }
+            }
+          }
+        }
+        else if (sub == 4)
+        {
+          int id = 0;
+          cout << "Player ID to remove: ";
+          cin >> id;
+
+          if (removeCandidate(shortlist, id))
+          {
+            cout << "Removed player " << id << " from the shortlist.\n";
+          }
+          else
+          {
+            cout << "ID " << id << " is not on the shortlist.\n";
+          }
+        }
+        else if (sub != 0)
+        {
+          cout << "Invalid choice. Please select 0-4.\n";
+        }
+      }
+
+      clearList(shortlist);
       break;
+    }
 
     case 7:
       cout << "Exiting menu.\n";
